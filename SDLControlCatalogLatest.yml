@@ -1,0 +1,1247 @@
+---
+Verification Activities:
+  Perform threat modeling:
+    Objective: "Understand how a product or application may be attacked to prioritize and plan defense mitigations"
+    Applicable If:
+      - "Product or application includes new interfaces, features or functionality"
+      - "Product or application introduces or modifies security features"
+      - "Product or application changes data flows"
+    Requirements:
+      - "Products or applications must undergo a threat modeling exercise, considering at a minimum all of the issues in Dell’s Threat Library1."
+      - "Threat models must be updated or new ones must be generated whenever new components or interfaces are added to product architectures."
+      - "Threat models must include all proprietary components (including scripts that are provided to customers)"
+      - "Threat modeling does not need to analyze the internals of third party components; however it must consider all of the interactions with those components"
+    Guidance:
+      - "See Threat Modeling2 for further details and recommendations."
+      - "Threat Modeling Cheat Sheet3."
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete."
+      - Compliant Practice Maturity:
+        - "Review Context and Level-1 data flow diagrams (DFD)"
+      - Standard Practice Maturity:
+        - "Review mitigated and unmitigated threats"
+        - "Attack scenarios, CVSS score or CWE entry and severity must be recorded for unmitigated threats"
+        - "Attack scenarios and CVSS scores should be documented for mitigated threats. This is important information to prioritize downstream verification of the threat model through empirical testing of the software. When resources or schedule is constrained, it is recommended to verify the mitigations for highestseverity attack scenarios first. CVSS scores do not need to be captured for threats that have been mitigatedand verified (testing complete)."
+      - Leading Practice Maturity:
+        - "Detail sequence diagrams are documented and analyzed for security protocols (such as authentication,authorization and single sign on)"
+        - "Custom crypto payloads are documented and analyzed"
+        - "Subject-object matrix is created to drive verification of authorization engines"
+      - Cutting Edge Practice Maturity: N/A
+
+  Use static code analysis:
+    Objective:
+      - "Identify common coding errors that lead to high risk security vulnerabilities"
+    Applicable If:
+      - "Parts of the product or application are constructed from source code."
+    Requirements:
+      - "Engineering and Development teams must analyze their source code using an automated static analysis tool that effectively discovers the high risk security defects within those languages."
+      - "Manual code reviews must be used when no approved automated analysis tools are available."
+      - "Manual code reviews should be performed even when an approved automated tool is available."
+      - "Manual code reviews are effective at finding certain classes of issues that static analysis cannot find and are highly recommended for critical code paths such as authentication and authorization."
+    Guidance:
+      - "Recommended tools can be found at Code Analysis8."
+      - "A guide for conducting manual security code reviews is available at Security Code Review Guide9"
+      - "Fortify Static Code Analyzer (SCA) - Everything you need10."
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+        - "Review results from static analysis tool report and its triage"
+        - "Verify that appropriate security checkers/rules are enabled to cover all classes of coding issues."
+        - "Verify that all critical or high severity issues are resolved or approved by management"
+      - Standard Practice Maturity:
+        - "Static analysis is automated and integrated with build and check-in process so that developers are accountable for any deviation from established coding standards"
+      - Leading Practice Maturity:
+        - "Static analysis tool is customized to lower false positive rate while maintaining true positive rate"
+        - "Manual code reviews are performed on critical code paths"
+      - Cutting Edge Practice Maturity:
+        - "Multiple static analysis tools are run against the codebase"
+  Perform network vulnerability scanning:
+    Objective:
+        - "Identify known vulnerabilities in network-exposed services"
+    Applicable If:
+        - "Product or Application that listens on a network port and accepts connections from clients"
+    Requirements:
+        - "Products or applications must be analyzed using a network vulnerability scanner. A Network scanning service is available as a free service. For more details please consult our Network Vulnerability and Scanning15 service description."
+    Guidance:
+        - "This type of scanning is especially important for products that embed operating systems or application and database servers with high attack surface."
+        - "More information on network vulnerability scanning and requesting a scan can be found at Network Vulnerability & STIG Scanning16"
+        - "For IT Applications, this type of scanning is performed and managed by Cybersecurity rather than the development team. For products, the scanning is the responsibility of the development team. There is a scanning service that can be utilized by product development teams, however the lead time on scanning can be shortened greatly by deploying the scanners into continuous integration environments."
+        - "This type of scanning requires authorization from IAAS cloud platform providers. In this scenario, it is recommended to have a local instance of the software that is scanned more frequently than the hosted version."
+        - "This type of scanning may not be applicable for cloud native applications that do not expose a traditional operating system and ports."
+    Verification:
+      - Compliant Practice Maturity:
+        - "Review scan report and triage results"
+      - Standard Practice Maturity:
+        - "N/A"
+      - Leading Practice Maturity:
+        - "N/A"
+      - Cutting Edge Practice Maturity:
+        - "N/A"
+    External References: "OWASP Guidance: Using Components with Known Vulnerabilities21"
+
+  Perform web security testing:
+      Objective:
+          - "Identify common weaknesses in web applications"
+      Applicable If:
+          - "Engineering and development teams must analyze web interfaces (both UI based web applications and REST/SOAP web services) using a web application scanner such as IBM AppScan or an inline proxy such as BURP or ZAP, to identify common weaknesses such as those found in the Threat Library- Attacks on web applications22."
+      Guidance:
+          - "Products: Visit Security Testing23 to request for web security testing."
+          - "Applications: Request web security testing through GSRM → Security assurance request24."
+          - "A scan should be run whenever there are changes to the codebase. For best results, web security testing should be integrated into continuous integration or regression testing frameworks using an inline proxy such as Burp automator25, Burp Suite26 or OWASP ZAP27"
+          - "Applications that are deployed on cloud platforms may require authorization from the platform provider before running this type of testing. In addition to periodic authorized testing of the deployment environment, it is recommended to deploy a local instance for more frequent testing."
+          - "Visit Web Security Testing Service28 for more information on the service flavors available."
+      Verification:
+        - Compliant Practice Maturity29:
+            - "Review web security test report and triage results"
+        - Standard Practice Maturity30:
+            - "N/A"
+        - Leading Practice Maturity31:
+            - "N/A"
+        - Cutting Edge Practice Maturity32:
+            - "N/A"
+  Scan for malware:
+      Objective:
+          - "Identify and eliminate malicious content from Dell products before they reach the customer"
+      Applicable If:
+          - "Products that ships to customers"
+          - "Not applicable for Applications"
+      Requirements:
+          - "Product components must be tested using malware analysis of application components, binaries, and installation packages to identify malware infections prior to release."
+      Guidance:
+          - "Further guidance on malware scanning is available at Anti-Malware Tools33."
+          - "Dell Cybersecurity provides command-line executables of McAfee VirusScan at a public share at \\\\corpustechweb.corp.emc.com34\\antivirus\\command line installs\\ which also contains examples of criptable use. The scanners available at that location support multiple platforms such as FreeBSD, HP-UX, Linux (32/64/s390), SCO Unix, Solaris, AIX and Windows."
+          - "When performing malware scanning, it is important to ensure that the latest updates and signatures are installed."
+          - "For firmware and BIOS there are specialized tools such as the ESET UEFI Scanner35"
+      Verification:
+      - Compliant Practice Maturity36:
+          - "Review tool report and triage"
+          - "Verify that all outstanding findings are fully remediated"
+      - Standard Practice Maturity37:
+          - "N/A"
+      - Leading Practice Maturity38:
+          - "N/A"
+      - Cutting Edge Practice Maturity39:
+          - "N/A"
+  Verify SDL control implementations:
+      Objective:
+          - "Verify that controls are effective and implemented correctly"
+      Applicable If:
+          - "for Products and Applications."
+      Requirements:
+          - "Engineering and development teams must verify that SDL controls have been implemented correctly."
+          - "Engineering and development teams should have a security test plan that identifies test methods and procedures that will be used to thoroughly test the SDL security requirements before release."
+          - "Engineering and development teams must test positive, negative and boundary test cases."
+      Guidance:
+          - "The PAS provides a test planning service (Security Testing Bootcamp40)"
+      Verification:
+        - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+        - Compliant Practice Maturity:
+            - "N/A"
+        - Standard Practice Maturity:
+            - "Review Security Test Plan with committed dates for execution"
+            - "The committed plan must cover all critical and high severity threats found internally or externally"
+        - Leading Practice Maturity:
+            - "Review and triage security testing results"
+            - "Champion is proficient and needs minimal PAS assistance to complete this activity"
+        - Cutting Edge Practice Maturity44:
+            - "N/A"
+  Apply fuzz testing:
+      Objective:
+          - "Verify robustness of interfaces to unexpected input"
+      Applicable If:
+          - "Parts of the product or application are constructed from source code"
+      Requirements:
+          - "Engineering and development teams must apply fuzzing to all interfaces. Any robustness issues discovered by fuzzing must be investigated and remediated to improve the interface’s resiliency."
+      Guidance:
+          - "Further guidance is available here45"
+          - "Fuzzing should run at least 9999 iterations."
+          - "Although all interfaces should be fuzzed, in terms of prioritization for legacy code bases, network accessible interfaces and components that require elevated privileges should be fuzzed before other components."
+          - "A proprietary interface is one that is developed by Dell Technologies"
+      Verification:
+        - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+        - Compliant Practice Maturity:
+            - "N/A"
+        - Standard Practice Maturity:
+            - "N/A"
+        - Leading Practice Maturity:
+            - "All high risk proprietary interfaces have been fuzzed"
+            - "Review reports from tools run"
+        - Cutting Edge Practice Maturity:
+            - "All proprietary interfaces have been fuzzed"
+            - "Review reports from tools run"
+  Perform independent security validation:
+      Objective:
+          - "Validate a product or application's resiliency"
+      Applicable If:
+          - "Product or application introduces new security controls or features."
+          - "Product or application introduces new interfaces."
+      Requirements:
+          - "Engineering and Development teams should consider and apply independent penetration testing to products."
+      Guidance: >
+          This type of testing should be performed by company internal resources50 that are independent in reporting structure to the product development organization or by 3rd party vendors that specialize in penetration testing.
+          Because independent penetration testing generally has a cost associated with it, it is recommended that it is only deployed after the  Engineering and Development team has adopted all other analysis activities and has made significant inroads with SDL control implementation and validation. Otherwise the independent validation is likely to raise issues that are easily discovered using basic techniques. It is also recommended that the Security Champions be involved in the pen test process and ensure that the effort reflects input from any threat modeling or security testing that has been performed. In this context penetration testing can help drive continuous improvement of security engineering practices.
+          In addition to continuous improvement purposes, it is recommended that a Penetration test be conducted anytime when one or more of the below situation occurs
+            Product or functionality targets security or a highly regulated market.
+            Likelihood of being attacked (e.g. high profile or high value target.
+            Large number of externally reported vulnerabilities on product.
+            Major release that adds significant new functionality or attack surface.
+          In some scenarios, crowd-sourced security validation (e.g. a Bug Bounty) may be used to achieve this control objective. Contact Product Security Office at the Service Desk51 for more information.
+          In general, minor releases without new security functionality do not require pen testing.
+          An independent validation is one that is conducted by a technical expert who does not report to the same management chain as the product development organization.
+          For more information on independent validation and to submit a request, please visit Independent Security Testing52.
+      Verification:
+        - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+        - Compliant Practice Maturity:
+            - "N/A"
+        - Standard Practice Maturity:
+            - "Review report from tool."
+        - Leading Practice Maturity:
+            - "N/A"
+        - Cutting Edge Practice Maturity:
+            - "N/A"
+  Mobile app scanning:
+      Objective:
+          - Identify common weaknesses in mobile apps
+      Applicable If:
+          - Software development effort includes a mobile app component.
+      Requirements:
+          - Mobile apps must be analyzed using a mobile app scanning tool.
+      Guidance: >
+          For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+      Verification:
+        - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+        - Compliant Practice Maturity:
+            - "N/A"
+        - Standard Practice Maturity:
+            - "Review report from tool."
+        - Leading Practice Maturity:
+            - "N/A"
+        - Cutting Edge Practice Maturity:
+            - "N/A"
+Design objectives:
+  Enforce complete mediation:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+    Apply least privilege:
+      Objective:
+        - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+      Applicable If:
+          - Software development effort includes a mobile app component.
+      Requirements:
+          - Mobile apps must be analyzed using a mobile app scanning tool.
+      Guidance: >
+          For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+      Verification:
+        - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+        - Compliant Practice Maturity:
+            - "N/A"
+        - Standard Practice Maturity:
+            - "Review report from tool."
+        - Leading Practice Maturity:
+            - "N/A"
+        - Cutting Edge Practice Maturity:
+            - "N/A"
+      Use only proven crypto:
+        Objective:
+          - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+        Applicable If:
+            - Software development effort includes a mobile app component.
+        Requirements:
+            - Mobile apps must be analyzed using a mobile app scanning tool.
+        Guidance: >
+            For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+        Verification:
+          - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+          - Compliant Practice Maturity:
+              - "N/A"
+          - Standard Practice Maturity:
+              - "Review report from tool."
+          - Leading Practice Maturity:
+              - "N/A"
+          - Cutting Edge Practice Maturity:
+              - "N/A"
+  Ensure that certificate validation is bound to a trusted public key:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+  Perform code signing:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+
+  Limit and document service access:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+  Provide security update capability:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+  Do not enable deprecated or vulnerable protocols:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+
+  Use proven authentication only:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+
+  Implement audit logging:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+
+  Use sudo securely:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+
+Protect sensitive information:
+    Support and encourage manufactured-unique or installation-unique secrets:
+      Objective:
+        - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+      Applicable If:
+          - Software development effort includes a mobile app component.
+      Requirements:
+          - Mobile apps must be analyzed using a mobile app scanning tool.
+      Guidance: >
+          For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+      Verification:
+        - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+        - Compliant Practice Maturity:
+            - "N/A"
+        - Standard Practice Maturity:
+            - "Review report from tool."
+        - Leading Practice Maturity:
+            - "N/A"
+        - Cutting Edge Practice Maturity:
+            - "N/A"
+Support changeable secrets rekey ability:
+  Objective:
+    - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+  Applicable If:
+      - Software development effort includes a mobile app component.
+  Requirements:
+      - Mobile apps must be analyzed using a mobile app scanning tool.
+  Guidance: >
+      For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+  Verification:
+    - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+    - Compliant Practice Maturity:
+        - "N/A"
+    - Standard Practice Maturity:
+        - "Review report from tool."
+    - Leading Practice Maturity:
+        - "N/A"
+    - Cutting Edge Practice Maturity:
+        - "N/A"
+
+  Store secrets securely:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+
+  Do not display secrets in plain text:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+
+    Protect againts brute force attacks:
+      Objective:
+        - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+      Applicable If:
+          - Software development effort includes a mobile app component.
+      Requirements:
+          - Mobile apps must be analyzed using a mobile app scanning tool.
+      Guidance: >
+          For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+      Verification:
+        - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+        - Compliant Practice Maturity:
+            - "N/A"
+        - Standard Practice Maturity:
+            - "Review report from tool."
+        - Leading Practice Maturity:
+            - "N/A"
+        - Cutting Edge Practice Maturity:
+            - "N/A"
+
+  Protect sensitive data:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+
+Secure web interfaces:
+  Expose https only:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+  Prevent cross site scripting:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+
+  Prevent HTTP response splitting:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+  Prevent cross-site request forgery:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+  Do not send sensitive data as HTTP GET query strings:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+
+  Use cookies securely:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+  Prevent session fixation:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+  Prevent clickjacking:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+
+  Prevent open redirects:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+  Use sessions securely:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+
+Prevent Injection:
+  Prevent path traversal:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+  Prevent injection:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+  Prevent os command injection:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+  Prevent buffer injection:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+  Mediate code upload functions:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+    Enable memory protection mechanisms:
+      Objective:
+        - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+      Applicable If:
+          - Software development effort includes a mobile app component.
+      Requirements:
+          - Mobile apps must be analyzed using a mobile app scanning tool.
+      Guidance: >
+          For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+      Verification:
+        - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+        - Compliant Practice Maturity:
+            - "N/A"
+        - Standard Practice Maturity:
+            - "Review report from tool."
+        - Leading Practice Maturity:
+            - "N/A"
+        - Cutting Edge Practice Maturity:
+            - "N/A"
+  Perform input validation:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+Secure third party components:
+  Harden third party components:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+
+  Release latest secure versions of third party components:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+
+  Source third party components securely:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+
+Security documentation:
+  Provide a security documentation guide:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+  Document all access:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+  Provide secure serviceability customer letter:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+Governance:
+  Adopt_security_development_training:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+  Identify security champions:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+  Document and commit to security requirements:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+  Maintain and enforce coding conventions:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+  Perform pre-GA/GB assessment:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+  Provide regular security review to business unit management:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+
+  Track security defects:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+
+Vulnerability response for sdl:
+  Document known false positives:
+    Objective:
+      - "To provide additional information to help customers and customer support troubleshoot or diagnose
+potential security problems in third party components shipped in Dell products"
+    Applicable If:
+      - "Product has customers running scan reports. Products that are data center focused such as server, storage,
+and networking and/or software that is delivered as an appliance or virtual appliance (e.g., ovf, ova, or vhd,
+etc.)"
+      - "Product (or software component) either listens on a network port and accepts connections from clients or
+embeds third party components (including open source software, operating systems, database, web servers
+or application libraries"
+      - Not applicable to Applications
+    Requirements:
+      - "Product teams must use False Positive Security KB Templates to document false positive findings reported
+by network vulnerability scanners and/or component management tools (e.g. BlackDuck)"
+    Guidance: >
+        Refer to the False Positive Security KB Article Template465
+        Third-Party Response - Firmware and Software Procedure466
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - Document known false positives for critical and high vulnerabilities in third party components
+      - Leading Practice Maturity:
+          - Document known false positives for all vulnerabilities in third party embedded components
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+  Conduct vulnerability root cause analysis:
+    Objective:
+      - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+    Applicable If:
+        - Software development effort includes a mobile app component.
+    Requirements:
+        - Mobile apps must be analyzed using a mobile app scanning tool.
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "N/A"
+      - Standard Practice Maturity:
+          - "Review report from tool."
+      - Leading Practice Maturity:
+          - "N/A"
+      - Cutting Edge Practice Maturity:
+          - "N/A"
+    Security updates:
+      Objective:
+        - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+      Applicable If:
+          - Software development effort includes a mobile app component.
+      Requirements:
+          - Mobile apps must be analyzed using a mobile app scanning tool.
+      Guidance: >
+          For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+      Verification:
+        - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+        - Compliant Practice Maturity:
+            - "N/A"
+        - Standard Practice Maturity:
+            - "Review report from tool."
+        - Leading Practice Maturity:
+            - "N/A"
+        - Cutting Edge Practice Maturity:
+            - "N/A"
+    Document security advisories:
+      Objective:
+        - Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access
+      Applicable If:
+          - Software development effort includes a mobile app component.
+      Requirements:
+          - Mobile apps must be analyzed using a mobile app scanning tool.
+      Guidance: >
+          For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+      Verification:
+        - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+        - Compliant Practice Maturity:
+            - "N/A"
+        - Standard Practice Maturity:
+            - "Review report from tool."
+        - Leading Practice Maturity:
+            - "N/A"
+        - Cutting Edge Practice Maturity:
+            - "N/A"
+
+  Maintain latest secure versions of Third Party Components:
+    Objective:
+      - "Ensure each and every access request for sensitive resources is scrutinized to prevent unauthorized access"
+    Applicable If:
+        - "Software development effort includes a mobile app component."
+    Requirements:
+        - "Mobile apps must be analyzed using a mobile app scanning tool."
+    Guidance: >
+        For information on submitting a request, please see the Mobile Security Testing Service Definition57.
+    Verification:
+      - "To meet a maturity level, the verification steps defined under lower maturity levels must also be complete"
+      - Compliant Practice Maturity:
+          - "Team complies with [Vulnerability Response Standard](https://www.google.com) as relates to Third-Party Response and Risk
+Escalation"
+      - Standard Practice Maturity:
+          - "Team actively monitors for and remediates medium severity vulnerabilities in embedded third party
+components"
+      - Leading Practice Maturity:
+          - "Team actively monitors for and remediates low severity vulnerabilities in embedded third party components"
+      - Cutting Edge Practice Maturity:
+          - "N/A"

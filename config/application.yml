@@ -1,0 +1,6 @@
+spring.cloud.config.name: poc-vsc
+profiles: dev1,dev2,!local
+sdlc:
+   metadata:
+      metadatapath: SDLControlCatalogMetadata.yml
+      catallogpath: SDLControlCatalogLatest.yml

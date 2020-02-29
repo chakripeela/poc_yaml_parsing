@@ -1,0 +1,18 @@
+---
+Metadata:
+  Enrollment: [Governance]
+  Assessment: [Design, Protect_sensitive_information]
+  Governance:
+    Guidance: ${Governance.Adopt_security_development_training.Guidance}
+    #Requirements: ${Governance.Adopt_security_development_training.Requirements}
+    Questions:
+      - dependent_on_previous_question_confirmation: false
+        text: "Is Security Development Training Adopted?"
+        answer_type: list
+        answer_choice: ["yes", "no"]
+        attachment: true
+      - dependent_on_previous_question_confirmation: true
+        text: "Are Security Champions Identified?"
+        answer_type: list
+        answer_choice: ["yes", "no"]
+        attachment: true

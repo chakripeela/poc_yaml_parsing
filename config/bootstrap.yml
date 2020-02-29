@@ -1,0 +1,9 @@
+spring:
+   cloud:
+      config:
+         enabled: true
+         endpoint: http://localhost:8888
+         label: master
+---
+profiles: dev1,dev2
+spring.cloud.config.endpoint: http://dev-config-server:8888
