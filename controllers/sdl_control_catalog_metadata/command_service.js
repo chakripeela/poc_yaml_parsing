@@ -9,10 +9,10 @@ const SPRING_SERVICE_URL = process.env.SPRING_SERVICE_URL || `http://localhost:$
 
 
 exports.createControlCatalogMetadata = (req, mainres, next) => {
-    request('http://localhost:8888/client-config/sdlcatalogmetadata', { json: true }, (err, res, body) => {
+    request(SPRING_SERVICE_URL + '/client-config/sdlcatalogmetadata', { json: true }, (err, res, body) => {
         if (err) { return console.log(err); }
         let sdlcCatalogData = body.propertySources[0].source;
-        
+
         SdlControlCatalogMetadata
             .findOne({ where: { key: 'sdlc_metadata' } })
             .then(function (obj) {

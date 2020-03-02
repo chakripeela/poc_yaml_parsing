@@ -8,7 +8,7 @@ const SPRING_SERVICE_URL = process.env.SPRING_SERVICE_URL || `http://localhost:$
 
 
 exports.createControlCatalog = (req, mainres, next) => {
-    request('http://localhost:8888/client-config/sdlcatalog', { json: true }, (err, res, body) => {
+    request(SPRING_SERVICE_URL+'/client-config/sdlcatalog', { json: true }, (err, res, body) => {
         if (err) { return console.log(err); }
         let sdlcCatalogData = body.propertySources[0].source;
         SdlControlCatalog
